@@ -1,6 +1,7 @@
 import React from "react";
 import ArtistsRow from "../components/ArtistsRow";
 import NewRealeses from "../components/NewRealeses";
+import NotifyModal from "../components/NotifyModal";
 
 function Home() {
   return (

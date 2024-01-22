@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import {Link} from "react-router-dom"
+import { LOADING } from "../context/types";
+import useNotify from "../hooks/useNotify";
 import useScrollValue from "../hooks/useScrollValue";
 import useSongs from "../hooks/useSongs";
 import { truncate } from "../utils/main";
+import Loader from "./Loader";
 
 const API_KEY = "2b18da63335bb69e417750d5a0cd80d2";
 const TMDB_URL = "https://api.themoviedb.org/3";
@@ -14,6 +17,7 @@ const MOVIES_URL_PATHS = {
 
 
 function NewRealeses({ heading }) {
+  const {dispatch, loading} = useNotify();
   const [movies, setMovies] = useState([]);
   const cardContainerRef = useRef(null);
   const { scrollValue, handlePrev, handleNext } =
@@ -22,14 +26,19 @@ function NewRealeses({ heading }) {
 
   useEffect(() => {
     async function fetchMovies(url) {
+      dispatch({type: LOADING, payload: true});
       const response = await fetch(TMDB_URL + url + API_KEY);
       const data = await response.json();
-
       setMovies(data.results);
+      dispatch({type: LOADING, payload: false});
     }
 
     fetchMovies(MOVIES_URL_PATHS.trending);
   }, []);
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="new-realeses">

@@ -33,18 +33,119 @@ img {
   width: 100%;
   object-fit: cover;
 }
-label{
+
+label {
   display: inline-block;
   color: #334155;
   font-weight: 600;
   font-size: 16px;
 }
 
-.form-control:focus, select:focus{
+.form-control:focus,
+select:focus {
   box-shadow: none !important;
   border: 1px solid #ccc !important;
   outline: 1px solid #ccc !important;
 }
+
+.notify-overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e9e5edeb;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+}
+.notify-overlay-modal.hidden{
+  display: none;
+}
+
+.notify-modal {
+  max-width: 240px;
+  height: 280px;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0.275rem 0.75rem -0.0625rem rgba(11, 15, 25, .06), 0 0.125rem 0.4rem -0.0625rem rgba(11, 15, 25, .03);
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+
+  -webkit-animation: scaleModalIn .2s linear;
+  /* Safari */
+  animation: scaleModalIn .2s linear;
+
+}
+.scaleOut{
+  -webkit-animation: scaleModalOut .9s 2s;
+  /* Safari */
+  animation: scaleModalOut .9s 2s;
+}
+
+.notify-modal span i {
+  font-size: 3rem;
+  color: lightgreen;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  border: 5px solid rgb(225, 229, 233);
+  border-bottom-color: rgb(0, 110, 255);
+  border-top-color: rgb(0, 110, 255);
+  border-radius: 50%;
+  -webkit-animation: loading .9s linear infinite;
+  /* Safari */
+  animation: loading .9s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(365deg);
+  }
+}
+
+@keyframes scaleModalIn {
+  0% {
+    transform: scale(0.1);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleModalOut {
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(0.3);
+  }
+}
+
 
 .heading {
   font-size: 20px;
@@ -245,7 +346,7 @@ label{
 
 /* NavBar styles */
 .navbar {
-  padding: 1rem 2rem;
+  padding-left: 1rem;
 }
 
 .navbar .navbar-search {
@@ -281,23 +382,40 @@ label{
   flex: 1;
 }
 
-.navbar .auth-btns ul li button{
-  padding: 5px 20px;
-  border-radius: 4px;
+.navbar .auth-btns ul li button {
+  display: inline-flex;
+  height: 40px;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 0px 16px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 6px;
+  background-color: rgb(79, 101, 241);
+  background-image: linear-gradient(90deg, rgb(111, 137, 251) 0%, rgb(97, 109, 245) 33%, rgb(92, 82, 235) 100%);
+  transition: all 250ms ease 0s;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: 400;
   border: none;
-  font-weight: 500;
-  color: white;
+  margin-right: 6px;
 }
-.navbar .auth-btns button i{
+
+.navbar .auth-btns button i {
   margin-left: 4px;
 }
 
-.navbar .auth-btns .login{
-  background-color: #0d6fb1;
+.navbar .auth-btns .login {
+  background-color: rgb(79, 101, 241);
+  background-image: linear-gradient(90deg, rgb(111, 137, 251) 0%, rgb(97, 109, 245) 33%, rgb(92, 82, 235) 100%);
   margin-right: 18px;
 }
-.navbar .auth-btns .sign{
-  background-color: #f65656;
+
+.navbar .auth-btns .sign {
+  background-color: rgb(66 41 25);
+  background-image: linear-gradient(90deg, #df5546 0%, rgb(245 120 97) 33%, rgb(233 22 22) 100%);
   margin-left: 20px;
 }
 
@@ -314,7 +432,7 @@ label{
 /* NewRealeses styles */
 
 .new-realeses {
-  padding: 1rem 2rem;
+  padding: 2rem 0rem;
 }
 
 
@@ -322,6 +440,7 @@ label{
 /* SinglePageSongs style */
 .single-page-song .song-cover-img {
   border-radius: 20px;
+  height: 300px;
 }
 
 .single-page-song .btn-2 {
@@ -330,7 +449,16 @@ label{
   padding: 10px;
   width: 150px;
   font-weight: 500;
-  color: #f2f2f2;
+  display: inline-flex;
+  white-space: nowrap;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(79, 101, 241);
+  background-image: linear-gradient(90deg, rgb(111, 137, 251) 0%, rgb(97, 109, 245) 33%, rgb(92, 82, 235) 100%);
+  transition: all 250ms ease 0s;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
 }
 
 .single-page-song .btn-2 i {
@@ -355,20 +483,31 @@ label{
 
 /* Upload Song Styles */
 .upload-btn {
+  border-radius: 50px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  background-color: #f65656;
-  color: white;
+  padding: 10px;
+  width: 150px;
   font-weight: 500;
+  display: inline-flex;
+  white-space: nowrap;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  background-color: #f65656;
+  background-image: linear-gradient(90deg, #9f0505 0%, #f65656 33%, #ff7878 100%);
+  transition: all 250ms ease 0s;
+  color: rgb(255, 255, 255);
+  font-size: 17px;
 }
-.upload-inner-container{
+
+.upload-inner-container {
   max-width: 700px;
   /* box-shadow: 0 7px 14px 0 rgba(65,69,88,0.1), 0 3px 6px 0 rgba(0,0,0,0.07); */
   border-radius: 6px;
   padding: 20px;
 }
-.upload-song-container .logo2{
+
+.upload-song-container .logo2 {
   width: 200px;
   display: block;
   margin: auto;
@@ -379,32 +518,40 @@ label{
 
 /* ArtistRow Styles */
 .artist-row-container {
-  padding: 1rem 2rem;
+  padding: 2rem 0rem;
 }
-.artist-row-container img{
+
+.artist-row-container img {
   width: 120%;
   height: 160px;
   border-radius: 50%;
   transform: scale(0.7);
   outline: 10px solid #b5bfc769;
 }
-.artist-row-container .artist{
+
+.artist-row-container .artist {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.artist-row-container .content h4{
+.artist-row-container .artist a{
+  color: hsl(222.2 84% 4.9%);
+}
+
+.artist-row-container .content h4 {
   font-size: 15px;
   margin: 0;
   font-family: "DM Sans";
   font-weight: 500;
   text-wrap: nowrap;
 }
-.artist-row-container .content p{
+
+.artist-row-container .content p {
   font-size: small;
   color: #5f6f88;
 }
-.artist-row-container .content{
+
+.artist-row-container .content {
   text-align: center;
 }
 

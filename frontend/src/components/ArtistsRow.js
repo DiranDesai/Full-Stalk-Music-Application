@@ -1,9 +1,30 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { ARTIST_FETCHING } from "../context/types";
 import useScrollValue from "../hooks/useScrollValue";
+import useSongs from "../hooks/useSongs";
+import Artist from "./Artist";
 
 function ArtistsRow({ heading }) {
+  const {artists, dispatch} = useSongs();
   const cardContainerRef = useRef(null)
   const {scrollValue, handlePrev, handleNext} = useScrollValue(cardContainerRef)
+
+  useEffect(() => {
+    async function getArtists() {
+      const artists = ["6ctMiUYEAd4cy0CaH355Hk", "5odhOPSmoW63rQQ40qPKp2", "2LPkXn6qkjU2w6djSluOko", "3tVQdUvClmAT7URs9V3rsp", "19ym5zp3d6AwpdBAcXsLIG", "5f24U3gtxTUPIRT2HujkHm", "1pcKqVZ7T90mJ2rKo9XWYV", "0Y3agQaa6g2r0YmHPOO9rh", "3LZZPxNDGDFVSIPqf4JuEf", "22Bl1QCNEZvpqVwRPYscE4"]
+      const accessToken = localStorage.getItem("spotifyToken");
+      const response = await fetch(`https://api.spotify.com/v1/artists?ids=${artists.join(",")}`, {
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        }
+      });
+
+      const data = await response.json();
+      dispatch({type: ARTIST_FETCHING, payload: data.artists})
+    }
+
+    getArtists()
+  }, [])
 
   return (
     <div className="artist-row-container">
@@ -20,87 +41,9 @@ function ArtistsRow({ heading }) {
       </div>
       <div className="card-row-wrapper">
         <div className="card-row-container mt-4" ref={cardContainerRef}>
-          <article>
-            <div className="artist">
-              <img src="images/bobby_east.jpg" alt="" />
-              <div className="content">
-                <h4>Bobby East</h4>
-                <p>300K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/bob.jpg" alt="" />
-              <div className="content">
-                <h4>Bob Marley</h4>
-                <p>900K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/img9.jpg" alt="" />
-              <div className="content">
-                <h4>Macky 2</h4>
-                <p>520K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/yo.jpg" alt="" />
-              <div className="content">
-                <h4>Yoh Maps</h4>
-                <p>680K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/tay.jpg" alt="" />
-              <div className="content">
-                <h4>Tay Grin</h4>
-                <p>830K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/dizmo.jpg" alt="" />
-              <div className="content">
-                <h4>Dizmo</h4>
-                <p>450K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/bobby_east.jpg" alt="" />
-              <div className="content">
-                <h4>Bobby East</h4>
-                <p>450K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/yo.jpg" alt="" />
-              <div className="content">
-                <h4>Yoh Maps</h4>
-                <p>680K Followers</p>
-              </div>
-            </div>
-          </article>
-          <article>
-            <div className="artist">
-              <img src="images/tay.jpg" alt="" />
-              <div className="content">
-                <h4>Tay Grin</h4>
-                <p>830K Followers</p>
-              </div>
-            </div>
-          </article>
+          {artists?.map(artist => (
+            <Artist artist={artist} />
+          ))}
         </div>
       </div>
     </div>

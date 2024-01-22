@@ -9,6 +9,8 @@ import SinglePageSong from './pages/SinglePageSong';
 import UploadSongPage from './pages/UploadSongPage';
 import useAuth from './hooks/useAuth';
 import { isAuthPage } from './utils/main';
+import Dashboard from './pages/Dashboard';
+import ArtistSinglePage from './pages/ArtistSinglePage';
 
 function App() {
   const {token} = useAuth()
@@ -26,6 +28,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/songs/1" element={<SinglePageSong />} />
             <Route path="/upload" element={<UploadSongPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/artist/:id" element={<ArtistSinglePage />} />
           </Routes>
         </main>
         {/* <DownBar /> */}
