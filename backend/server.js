@@ -2,12 +2,17 @@ import {config} from "dotenv"
 config()
 
 import path from "path"
+import { fileURLToPath } from 'url';
+import {dirname} from "path"
 import express from "express"
 import axios from "axios"
 import cors from "cors"
 import fileUpload from "express-fileupload"
 import connectDb from "./config/database.js"
 import Songs from "./models/songsModel.js"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express()
 
@@ -19,16 +24,24 @@ if (process.env.NODE_ENV == "production") {
     origin = "http://localhost:3000"
 }
 
-//PRODUCTION ORIGIN
+console.log(process.env.NODE_ENV);
+
 let corsOptions = {
     origin: origin
 }
 
-app.use(cors({
-    origin: origin
-}))
+
+app.use(cors(corsOptions))
 app.use(fileUpload())
 app.use(express.json())
+
+// Serve static files from the 'build' directory
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Handle all other requests by serving 'index.html'
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 

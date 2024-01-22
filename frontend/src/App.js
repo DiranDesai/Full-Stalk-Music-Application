@@ -22,7 +22,7 @@ function App() {
     <>
       <Router>
         {!isAuthPage() && <SideBar />}
-        <main style={{marginLeft: `${isAuthPage() ? '0px' : '200px'}`}}>
+        <main>
           {!isAuthPage() && <NavBar />}
           <Routes>
             <Route path="/" element={<Home />} />
