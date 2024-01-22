@@ -11,8 +11,21 @@ import Songs from "./models/songsModel.js"
 
 const app = express()
 
+let origin;
+
+if (process.env.NODE_ENV == "production") {
+    origin = "https://full-stalk-music-application-frontend.onrender.com"
+} else {
+    origin = "http://localhost:3000"
+}
+
+//PRODUCTION ORIGIN
+let corsOptions = {
+    origin: origin
+}
+
 app.use(cors({
-    origin: process.env.CLIENT_URL
+    origin: origin
 }))
 app.use(fileUpload())
 app.use(express.json())
