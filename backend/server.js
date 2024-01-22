@@ -36,14 +36,14 @@ app.use(fileUpload())
 app.use(express.json())
 
 // Serve static files from the 'build' directory
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Handle all other requests by serving 'index.html'
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
-
+console.log(__dirname);
 
 
 app.get("/", (req, res) => {
