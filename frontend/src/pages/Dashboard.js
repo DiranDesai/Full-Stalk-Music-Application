@@ -1,8 +1,10 @@
 import React from 'react'
 
+const BACKEND_URL = "https://full-stalk-music-application-backend.onrender.com"
+
 function Dashboard() {
     async function getSpotifyAccessToken() {
-        const response = await fetch("http://localhost:5000/getSpotifyAccessToken")
+        const response = await fetch(`${BACKEND_URL}/getSpotifyAccessToken`)
         const data = await response.json()
         localStorage.setItem("spotifyToken", data.access_token)
       }

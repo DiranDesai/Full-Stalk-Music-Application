@@ -11,6 +11,7 @@ const API_KEY = "2b18da63335bb69e417750d5a0cd80d2";
 const TMDB_URL = "https://api.themoviedb.org/3";
 const TMDB_URL_IMG = "https://image.tmdb.org/t/p/w500";
 
+
 const MOVIES_URL_PATHS = {
   trending: "/trending/movie/day?api_key=",
 };
