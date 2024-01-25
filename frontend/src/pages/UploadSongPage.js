@@ -5,6 +5,8 @@ import { LOADING, loading, SUCCESS } from "../context/types";
 import Loader from "../components/Loader";
 import NotifyModal from "../components/NotifyModal";
 
+
+const BACKEND_URL = "https://full-stalk-music-application-backend.onrender.com"
 function UploadSongPage() {
   const {dispatch, loading, success, message} = useNotify();
 
@@ -44,7 +46,7 @@ function UploadSongPage() {
 
       try {
         dispatch({type: LOADING, payload: true});
-        const response = await fetch("http://localhost:5000/upload", {
+        const response = await fetch(`${BACKEND_URL}/upload`, {
             method: "POST",
             body: formData
         })
